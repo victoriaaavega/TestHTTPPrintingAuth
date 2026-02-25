@@ -1,11 +1,3 @@
-/*
-Theme Name: AB Test Theme
-Description: Mi primer custom themeeeeeeeee
-Version: 1.0
-Author: Vicky
-*/
-
-/* Estilos básicos */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -15,4 +7,22 @@ body {
 
 h1 {
     color: #333;
+}
+
+.debug-info {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #a0aec0;
+}
+
+.debug-info p {
+    margin: 4px 0;
+}
+
+.debug-info code {
+    color: #68d391;
 }
