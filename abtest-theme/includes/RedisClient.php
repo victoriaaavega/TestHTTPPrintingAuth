@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Handles all Redis operations for AB test variant storage.
- * Uses a Singleton connection to avoid opening multiple connections
- * per request, even when multiple experiments run on the same page.
+ * Handles all Redis operations for AB test variant storage, uses a Singleton connection to avoid opening
+ * multiple connections per request, even when multiple experiments run on the same page
  */
 class RedisClient {
 
@@ -11,8 +10,7 @@ class RedisClient {
     private static bool $failed     = false;
 
     /**
-     * Checks if Redis is available by attempting a ping.
-     * Uses the shared connection to avoid extra overhead.
+     * Checks if Redis is available
      *
      * @return bool
      */
@@ -34,8 +32,8 @@ class RedisClient {
     }
 
     /**
-     * Retrieves the assigned variant for a visitor and experiment.
-     * Returns null if no assignment is found.
+     * Retrieves the assigned variant for a visitor and experiment
+     * Returns null if no assignment is found
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -55,9 +53,8 @@ class RedisClient {
     }
 
     /**
-     * Saves the assigned variant for a visitor and experiment.
-     * Variants are stored for 30 days to ensure session consistency.
-     *
+     * Saves the assigned variant for a visitor and experiment, variants are stored for 30 days
+     * 
      * @param string $experimentId
      * @param string $visitorId
      * @param string $variant
@@ -71,14 +68,14 @@ class RedisClient {
         }
 
         $key = "ab_test:variant:{$experimentId}:{$visitorId}";
-        $ttl = 60 * 60 * 24 * 30; // 30 days in seconds
+        $ttl = 60 * 60 * 24 * 30;
 
         return $redis->setex($key, $ttl, $variant);
     }
 
     /**
-     * Returns a single shared Redis connection for the entire request lifecycle.
-     * If the connection already failed, returns null immediately without retrying.
+     * Returns a single shared Redis connection for the entire request lifecycle
+     * If the connection already failed, returns null
      *
      * @return Redis|null
      */

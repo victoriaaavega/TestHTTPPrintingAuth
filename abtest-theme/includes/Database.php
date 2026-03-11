@@ -1,18 +1,14 @@
 <?php
 
 /**
- * Handles all database operations for AB test variant storage.
- * Used as a fallback when Redis is unavailable, and as a permanent
- * record of all variant assignments for consistency and auditing.
+ * Handles all database operations for AB test variant storage
  */
 class Database {
 
     private const TABLE_VERSION = '1.0';
 
     /**
-     * Creates the assignments table only if it hasn't been created yet.
-     * Uses a WordPress option to track the table version so dbDelta()
-     * doesn't run on every request.
+     * Creates the assignments table only if it hasn't been created yet
      */
     public function maybeCreateTable(): void {
         if (get_option('ab_test_table_version') === self::TABLE_VERSION) {
@@ -24,8 +20,8 @@ class Database {
     }
 
     /**
-     * Retrieves the assigned variant for a visitor and experiment.
-     * Returns null if no assignment is found.
+     * Retrieves the assigned variant for a visitor and experiment
+     * Returns null if no assignment is found
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -46,8 +42,7 @@ class Database {
     }
 
     /**
-     * Saves the assigned variant for a visitor and experiment.
-     * Uses INSERT IGNORE to avoid duplicate entries safely.
+     * Saves the assigned variant for a visitor and experiment
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -70,7 +65,7 @@ class Database {
     }
 
     /**
-     * Returns the full table name including WordPress prefix.
+     * Returns the full table name including WordPress prefix
      *
      * @return string
      */
@@ -80,8 +75,7 @@ class Database {
     }
 
     /**
-     * Creates the assignments table using WordPress dbDelta().
-     * Safe to run multiple times, dbDelta won't duplicate the table.
+     * Creates the assignments table using WordPress dbDelta()
      */
     private function createTable(): void {
         global $wpdb;

@@ -1,3 +1,7 @@
+/* ================================
+   Hero - Variation B
+   ================================ */
+
 .hero {
     position: relative;
     display: flex;
@@ -10,8 +14,8 @@
     overflow: hidden;
 }
 
-.variant-control {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+.variation-b {
+    background: linear-gradient(135deg, #2d1b00, #4a2800);
 }
 
 .hero-content {
@@ -19,23 +23,23 @@
     z-index: 1;
 }
 
-.variant-control .hero-title {
+.variation-b .hero-title {
     font-size: 2.5rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 16px;
 }
 
-.variant-control .hero-subtitle {
+.variation-b .hero-subtitle {
     font-size: 1.1rem;
-    color: #a0aec0;
+    color: #fcd9a0;
     margin-bottom: 32px;
 }
 
-.variant-control .hero-button {
+.variation-b .hero-button {
     display: inline-block;
     padding: 14px 36px;
-    background-color: #3b82f6;
+    background-color: #f97316;
     color: #ffffff;
     font-size: 1rem;
     font-weight: 600;
@@ -44,10 +48,11 @@
     transition: background-color 0.2s ease;
 }
 
-.variant-control .hero-button:hover {
-    background-color: #2563eb;
+.variation-b .hero-button:hover {
+    background-color: #ea6c0a;
 }
 
+/* Badge to identify variant during testing */
 .hero-badge {
     position: absolute;
     top: 16px;
@@ -60,7 +65,7 @@
     text-transform: uppercase;
 }
 
-.variant-control .hero-badge {
-    background-color: #3b82f6;
+.variation-b .hero-badge {
+    background-color: #f97316;
     color: #ffffff;
 }

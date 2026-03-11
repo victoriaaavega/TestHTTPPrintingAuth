@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Generates a unique visitor ID based on request parameters.
- * This ID is used to consistently identify a visitor across sessions
- * without relying on cookies or login.
+ * Generates a unique visitor ID based on request parameters
  */
 class Fingerprint {
 
     /**
-     * Generates a unique visitor ID based on request parameters.
+     * Generates a unique visitor ID based on request parameters
      *
      * @return string SHA256 hash used as the visitor ID
      */
@@ -23,18 +21,16 @@ class Fingerprint {
     }
 
     /**
-     * Gets the real client IP, taking into account proxies.
-     * Checks headers in order of priority:
-     * Cloudflare → Load balancer → Nginx proxy → Direct connection
-     *
+     * Gets the real client IP
+     * 
      * @return string Client IP address
      */
     private function getClientIp(): string {
         $headers = [
-            'HTTP_CF_CONNECTING_IP', // Cloudflare
-            'HTTP_X_FORWARDED_FOR',  // Load balancers / proxies
-            'HTTP_X_REAL_IP',        // Nginx proxy
-            'REMOTE_ADDR',           // Direct connection
+            'HTTP_CF_CONNECTING_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_REAL_IP',
+            'REMOTE_ADDR',
         ];
 
         foreach ($headers as $header) {

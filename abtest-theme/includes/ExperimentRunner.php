@@ -5,14 +5,10 @@ require_once get_template_directory() . '/includes/RedisClient.php';
 require_once get_template_directory() . '/includes/Database.php';
 require_once get_template_directory() . '/includes/adapters/DecisionAdapterInterface.php';
 require_once get_template_directory() . '/includes/adapters/SimulatorAdapter.php';
-require_once get_template_directory() . '/includes/adapters/FlagshipAdapter.php';
 
 /**
- * Orchestrates the complete AB test flow for a specific experiment.
- * Can be called multiple times on the same page for different experiments.
- *
- * Dependencies are injected via the constructor, making this class
- * easy to test and extend.
+ * Orchestrates the complete AB test flow for a specific experiment, can be called multiple times on the
+ * same page for different experiments
  */
 class ExperimentRunner {
 
@@ -38,7 +34,6 @@ class ExperimentRunner {
     public function run(string $experimentId): array {
         $visitorId = $this->fingerprint->generateVisitorId();
 
-        // Set headers and cookie only once per request
         if (!self::$bootstrapped) {
             $this->setCacheBypassHeaders();
             $this->setHeapIdentityCookie($visitorId);
@@ -54,8 +49,7 @@ class ExperimentRunner {
     }
 
     /**
-     * Handles the experiment flow when Redis is available.
-     * Saves to both Redis and database for consistency.
+     * Handles the experiment flow when Redis is available
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -79,8 +73,7 @@ class ExperimentRunner {
     }
 
     /**
-     * Handles the experiment flow when Redis is unavailable.
-     * Reads and writes only to the database.
+     * Handles the experiment flow when Redis is unavailable
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -103,7 +96,7 @@ class ExperimentRunner {
     }
 
     /**
-     * Builds the result array returned by run().
+     * Builds the result array returned by run()
      *
      * @param string $experimentId
      * @param string $visitorId
@@ -121,8 +114,7 @@ class ExperimentRunner {
     }
 
     /**
-     * Sets headers to prevent the page from being served from cache.
-     * In production, this is handled by an Nginx rule on Kinsta.
+     * Sets headers to prevent the page from being served from cache
      */
     private function setCacheBypassHeaders(): void {
         header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -131,8 +123,7 @@ class ExperimentRunner {
     }
 
     /**
-     * Sets a first-party cookie with the visitor ID for Heap identity sync.
-     * JS reads this cookie and calls heap.identify(visitorId).
+     * Sets a first-party cookie with the visitor ID for Heap identity sync
      *
      * @param string $visitorId
      */

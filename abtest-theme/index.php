@@ -1,18 +1,13 @@
 <?php
 $startTime = microtime(true);
 
-// Bootstrap all classes and run experiments before any output is sent
 require_once get_template_directory() . '/includes/ExperimentRunner.php';
 
-// Create the backup table if it doesn't exist yet
 $database = new Database();
 $database->maybeCreateTable();
 
-// Initialize the runner with the simulator adapter
-// In production, swap SimulatorAdapter for FlagshipAdapter
 $runner = new ExperimentRunner(new SimulatorAdapter());
 
-// Run both experiments independently
 $heroExperiment   = $runner->run('experiment_hero');
 $navbarExperiment = $runner->run('experiment_navbar');
 
@@ -22,8 +17,6 @@ $visitorId     = $heroExperiment['visitorId'];
 $heroSource    = $heroExperiment['source'];
 $navbarSource  = $navbarExperiment['source'];
 
-$t1 = microtime(true);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,16 +25,13 @@ $t1 = microtime(true);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php bloginfo('name'); ?></title>
 
-    <?php // Base theme styles ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>">
 
-    <?php // Load only the CSS for the assigned hero variant ?>
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/<?php echo $heroVariant === 'control' ? 'variant-control' : 'variant-b'; ?>.css">
 </head>
 <body>
 
     <?php
-    // Experiment 1: Hero section
     if ($heroVariant === 'control') {
         require get_template_directory() . '/templates/variant-control.php';
     } else {
@@ -49,12 +39,11 @@ $t1 = microtime(true);
     }
     ?>
 
-    <?php // Experiment 2: Navbar variant ?>
     <nav class="navbar">
         <?php if ($navbarVariant === 'control'): ?>
-            <a href="#">Iniciar sesión</a>
+            <a href="#">Log in</a>
         <?php else: ?>
-            <a href="#">¡Únete gratis!</a>
+            <a href="#">Sign up for free!!</a>
         <?php endif; ?>
     </nav>
 
@@ -64,15 +53,12 @@ $t1 = microtime(true);
         <p>Experiment Navbar → Variant: <code><?php echo $navbarVariant; ?></code> | Source: <code><?php echo $navbarSource; ?></code></p>
     </div>
 
-    <?php // Heap identity sync ?>
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/heap-sync.js"></script>
 
     <?php
     $endTime = microtime(true);
     echo '<p style="color:black;padding:10px;">';
     echo 'Total: '          . round(($endTime - $startTime) * 1000) . 'ms<br>';
-    echo 'PHP logic: '      . round(($t1 - $startTime) * 1000) . 'ms';
-    echo '</p>';
     ?>
 
 </body>
