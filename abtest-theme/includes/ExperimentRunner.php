@@ -5,6 +5,7 @@ require_once get_template_directory() . '/includes/RedisClient.php';
 require_once get_template_directory() . '/includes/Database.php';
 require_once get_template_directory() . '/includes/adapters/DecisionAdapterInterface.php';
 require_once get_template_directory() . '/includes/adapters/SimulatorAdapter.php';
+require_once get_template_directory() . '/includes/adapters/FlagshipAdapter.php';
 
 /**
  * Orchestrates the complete AB test flow for a specific experiment, can be called multiple times on the
